@@ -97,7 +97,6 @@ export const getPokemonDetails = async (nameOrId) => {
   return formatPokemonData(pokemon, species);
 };
 
-
 export const getAllPokemon = async (page = 1, limit = config.pagination.defaultLimit) => {
   // Calculate offset for pagination
   const offset = (page - 1) * limit;
@@ -123,7 +122,6 @@ export const getAllPokemon = async (page = 1, limit = config.pagination.defaultL
     hasPrevPage: page > 1
   };
 };
-
 
 export const searchPokemon = async (query) => {
   // Handle empty query
@@ -160,14 +158,16 @@ export const searchPokemon = async (query) => {
 export const getPokemonTypes = async () => {
   const types = await pokemonRepository.getPokemonTypes();
 
-  return types
-    // Remove special types
-    .filter((t) => t.name !== 'unknown' && t.name !== 'shadow')
-    // Format for display
-    .map((t) => ({
-      name: t.name,
-      displayName: formatName(t.name)
-    }));
+  return (
+    types
+      // Remove special types
+      .filter((t) => t.name !== 'unknown' && t.name !== 'shadow')
+      // Format for display
+      .map((t) => ({
+        name: t.name,
+        displayName: formatName(t.name)
+      }))
+  );
 };
 
 export const getPokemonByType = async (
